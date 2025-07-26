@@ -7,7 +7,7 @@ const auth = require('../middleware/auth');
 
 
 
-const authMiddleware = require('../middleware/authMiddleware');
+const authMiddleware = require('../middleware/auth');
 
 router.post('/', authMiddleware, addCar);
 router.delete('/:id', authMiddleware, deleteCar);
