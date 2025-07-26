@@ -69,25 +69,34 @@
     const BASE_URL = 'https://top-gear-autos.onrender.com'; // ✅ Use live backend URL
     let token = '';
 
-    function login() {
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
+function login() {
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
 
-      fetch(`${BASE_URL}/api/admin/login`, { // ✅ fixed
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
-      })
-      .then(res => res.json())
-      .then(data => {
-        if (data.token) {
-          token = data.token;
-          document.getElementById('login-status').textContent = '✅ Login successful!';
-        } else {
-          document.getElementById('login-status').textContent = '❌ Login failed!';
-        }
-      });
-    }
+  fetch('https://top-gear-autos.onrender.com/api/admin/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, password })
+  })
+    .then(res => res.json())
+    .then(data => {
+      console.log("🔐 Login response:", data); // debug
+
+      if (data.success && data.token) {
+        token = data.token;
+        document.getElementById('login-status').textContent = '✅ Login successful!';
+        localStorage.setItem('adminToken', token); // optional
+        // redirect or show admin section if needed
+      } else {
+        document.getElementById('login-status').textContent = '❌ Invalid username or password';
+      }
+    })
+    .catch(err => {
+      document.getElementById('login-status').textContent = '❌ Login failed. Server error.';
+      console.error("Login error:", err);
+    });
+}
+
 
     function addCar() {
       const car = {
