@@ -83,7 +83,7 @@
       .then(data => {
         console.log("🔐 Login response:", data);
 
-        if (data.success && data.token) {
+        if (data.success){
           token = data.token;
           localStorage.setItem("adminToken", token); // ✅ Save token
           document.getElementById('login-status').textContent = '✅ Login successful!';
