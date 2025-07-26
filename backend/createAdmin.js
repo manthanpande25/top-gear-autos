@@ -5,7 +5,6 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const Admin = require('./models/Admin');
 
-
 const createAdmin = async () => {
   await mongoose.connect(process.env.MONGO_URI);
   
