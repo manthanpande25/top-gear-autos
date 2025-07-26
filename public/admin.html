@@ -37,12 +37,14 @@
 <body>
 
   <h2>🔐 Admin Login</h2>
-  <div class="section">
-    <input type="text" id="username" placeholder="Username" />
-    <input type="password" id="password" placeholder="Password" />
-    <button onclick="login()">Login</button>
-    <p id="login-status"></p>
-  </div>
+<div class="section section-login">
+  <input id="username" ... />
+  <input id="password" ... />
+  <button onclick="login()">Login</button>
+  <p id="login-status"></p>
+</div>
+<button onclick="logout()">Logout</button>
+
 
   <h2>➕ Add Car</h2>
   <div class="section">
@@ -66,8 +68,17 @@
   </div>
 
   <script>
-  const BASE_URL = 'https://top-gear-autos.onrender.com';
-  let token = localStorage.getItem("adminToken") || "";
+ const BASE_URL = 'https://top-gear-autos.onrender.com';
+let token = localStorage.getItem("adminToken") || "";
+let loggedInUser = localStorage.getItem("adminUser") || "";
+
+if (token) {
+  // ✅ Already logged in – show admin panel
+  document.getElementById('login-status').textContent = `👋 Welcome back, ${loggedInUser}`;
+  // Optionally: hide login section, show only admin tools
+  document.querySelector('.section-login').style.display = 'none';
+}
+
 
   // 🔐 Login Function
   function login() {
@@ -169,6 +180,13 @@
         console.error("Delete car error:", err);
       });
   }
+
+    function logout() {
+  localStorage.removeItem("adminToken");
+  localStorage.removeItem("adminUser");
+  location.reload(); // reload page to reset state
+}
+
 
   </script>
 
