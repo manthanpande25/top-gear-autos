@@ -3,7 +3,7 @@ require('dotenv').config({ path: path.resolve(__dirname, './.env') }); // ✅ Th
 
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const Admin = require('./models/admin');
+const Admin = require('./models/Admin');
 
 
 const createAdmin = async () => {
