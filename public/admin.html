@@ -1,3 +1,5 @@
+<!-- All changes are marked with ✅ comments -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -64,13 +66,14 @@
   </div>
 
   <script>
+    const BASE_URL = 'https://top-gear-autos.onrender.com'; // ✅ Use live backend URL
     let token = '';
 
     function login() {
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
 
-      fetch('http://localhost:5000/api/admin/login', {
+      fetch(`${BASE_URL}/api/admin/login`, { // ✅ fixed
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
@@ -98,7 +101,7 @@
         image: document.getElementById('image').value
       };
 
-      fetch('http://localhost:5000/api/cars', {
+      fetch(`${BASE_URL}/api/cars`, { // ✅ fixed
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -119,7 +122,7 @@
     function deleteCar() {
       const id = document.getElementById('deleteId').value;
 
-      fetch(`http://localhost:5000/api/cars/${id}`, {
+      fetch(`${BASE_URL}/api/cars/${id}`, { // ✅ fixed
         method: 'DELETE',
         headers: {
           'Authorization': 'Bearer ' + token
