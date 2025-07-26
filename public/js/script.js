@@ -8,7 +8,7 @@ let activeCategory = "All";
 let cars = [];
 
 // ✅ Correct fetch from backend API
-fetch('https://top-gear-autos.onrender.com')
+fetch('https://top-gear-autos.onrender.com/api/cars')
   .then(res => res.json())
   .then(data => {
     cars = data;
