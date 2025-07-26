@@ -82,14 +82,13 @@ function login() {
     .then(data => {
       console.log("🔐 Login response:", data); // debug
 
-      if (data.success && data.token) {
-        token = data.token;
-        document.getElementById('login-status').textContent = '✅ Login successful!';
-        localStorage.setItem('adminToken', token); // optional
-        // redirect or show admin section if needed
-      } else {
-        document.getElementById('login-status').textContent = '❌ Invalid username or password';
-      }
+if (data.success) {
+  document.getElementById('login-status').textContent = '✅ Login successful!';
+  // You can store token if backend sends it later
+} else {
+  document.getElementById('login-status').textContent = '❌ Invalid username or password';
+}
+
     })
     .catch(err => {
       document.getElementById('login-status').textContent = '❌ Login failed. Server error.';
