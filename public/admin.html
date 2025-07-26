@@ -66,87 +66,112 @@
   </div>
 
   <script>
-    const BASE_URL = 'https://top-gear-autos.onrender.com'; // ✅ Use live backend URL
-    let token = '';
+   <script>
+  const BASE_URL = 'https://top-gear-autos.onrender.com';
+  let token = localStorage.getItem("adminToken") || "";
 
-function login() {
-  const username = document.getElementById('username').value;
-  const password = document.getElementById('password').value;
+  // 🔐 Login Function
+  function login() {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
 
-  fetch('https://top-gear-autos.onrender.com/api/admin/login', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username, password })
-  })
-    .then(res => res.json())
-    .then(data => {
-      console.log("🔐 Login response:", data); // debug
-
-if (data.success) {
-  document.getElementById('login-status').textContent = '✅ Login successful!';
-  // You can store token if backend sends it later
-} else {
-  document.getElementById('login-status').textContent = '❌ Invalid username or password';
-}
-
+    fetch(`${BASE_URL}/api/admin/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
     })
-    .catch(err => {
-      document.getElementById('login-status').textContent = '❌ Login failed. Server error.';
-      console.error("Login error:", err);
-    });
-  console.log("📤 Sending login:", username, password);
-
-}
-
-
-    function addCar() {
-      const car = {
-        name: document.getElementById('name').value,
-        price: document.getElementById('price').value,
-        year: Number(document.getElementById('year').value),
-        km: document.getElementById('km').value,
-        fuel: document.getElementById('fuel').value,
-        transmission: document.getElementById('transmission').value,
-        category: document.getElementById('category').value,
-        image: document.getElementById('image').value
-      };
-
-      fetch(`${BASE_URL}/api/cars`, { // ✅ fixed
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + token
-        },
-        body: JSON.stringify(car)
-      })
       .then(res => res.json())
       .then(data => {
-        if (data.success) {
-          document.getElementById('add-status').textContent = '✅ Car added!';
+        console.log("🔐 Login response:", data);
+
+        if (data.success && data.token) {
+          token = data.token;
+          localStorage.setItem("adminToken", token); // ✅ Save token
+          document.getElementById('login-status').textContent = '✅ Login successful!';
         } else {
-          document.getElementById('add-status').textContent = '❌ Failed to add car';
-        }
-      });
-    }
-
-    function deleteCar() {
-      const id = document.getElementById('deleteId').value;
-
-      fetch(`${BASE_URL}/api/cars/${id}`, { // ✅ fixed
-        method: 'DELETE',
-        headers: {
-          'Authorization': 'Bearer ' + token
+          document.getElementById('login-status').textContent = '❌ Invalid username or password';
         }
       })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          document.getElementById('delete-status').textContent = '✅ Car deleted!';
-        } else {
-          document.getElementById('delete-status').textContent = '❌ Failed to delete';
-        }
+      .catch(err => {
+        document.getElementById('login-status').textContent = '❌ Login failed. Server error.';
+        console.error("Login error:", err);
       });
-    }
+
+    console.log("📤 Sending login:", username, password);
+  }
+
+  // ➕ Add Car Function
+  function addCar() {
+    const car = {
+      name: document.getElementById('name').value,
+      price: document.getElementById('price').value,
+      year: Number(document.getElementById('year').value),
+      km: document.getElementById('km').value,
+      fuel: document.getElementById('fuel').value,
+      transmission: document.getElementById('transmission').value,
+      category: document.getElementById('category').value,
+      image: document.getElementById('image').value
+    };
+
+    fetch(`${BASE_URL}/api/cars`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+      body: JSON.stringify(car)
+    })
+      .then(async res => {
+        const text = await res.text();
+        try {
+          const json = JSON.parse(text);
+          if (json.success) {
+            document.getElementById('add-status').textContent = '✅ Car added!';
+          } else {
+            document.getElementById('add-status').textContent = '❌ Failed to add car';
+          }
+        } catch (err) {
+          console.error("❌ Invalid JSON:", text);
+          document.getElementById('add-status').textContent = '❌ Invalid server response';
+        }
+      })
+      .catch(err => {
+        document.getElementById('add-status').textContent = '❌ Add failed: ' + err.message;
+        console.error("Add car error:", err);
+      });
+  }
+
+  // ❌ Delete Car Function
+  function deleteCar() {
+    const id = document.getElementById('deleteId').value;
+
+    fetch(`${BASE_URL}/api/cars/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
+      .then(async res => {
+        const text = await res.text();
+        try {
+          const json = JSON.parse(text);
+          if (json.success) {
+            document.getElementById('delete-status').textContent = '✅ Car deleted!';
+          } else {
+            document.getElementById('delete-status').textContent = '❌ Failed to delete car';
+          }
+        } catch (err) {
+          console.error("❌ Invalid JSON:", text);
+          document.getElementById('delete-status').textContent = '❌ Invalid server response';
+        }
+      })
+      .catch(err => {
+        document.getElementById('delete-status').textContent = '❌ Delete failed: ' + err.message;
+        console.error("Delete car error:", err);
+      });
+  }
+</script>
+
   </script>
 
 </body>
