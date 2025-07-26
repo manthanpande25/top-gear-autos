@@ -24,6 +24,9 @@ const createAdmin = async () => {
     password: hashedPassword
   });
 
+    console.log("✅ Admin created with:");
+  console.log("   Username:", username);
+  console.log("   Password:", password);
   await admin.save();
   console.log('✅ Admin created successfully!');
   process.exit();
