@@ -95,6 +95,8 @@ function login() {
       document.getElementById('login-status').textContent = '❌ Login failed. Server error.';
       console.error("Login error:", err);
     });
+  console.log("📤 Sending login:", username, password);
+
 }
 
 
