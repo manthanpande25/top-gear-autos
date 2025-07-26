@@ -111,3 +111,38 @@ document.addEventListener("click", function (e) {
     document.getElementById("carModal").style.display = "none";
   }
 });
+
+
+
+
+const loginForm = document.getElementById("login-form");
+
+if (loginForm) {
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    try {
+      const res = await fetch("https://top-gear-autos.onrender.com/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        alert("✅ Login successful");
+        window.location.href = "dashboard.html"; // redirect to admin panel
+      } else {
+        alert("❌ Invalid credentials");
+      }
+    } catch (err) {
+      alert("⚠️ Login failed. Server error.");
+      console.error(err);
+    }
+  });
+}
+
