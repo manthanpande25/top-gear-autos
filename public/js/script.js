@@ -6,13 +6,14 @@ const categoryButtons = document.querySelectorAll(".category-tabs button");
 
 let activeCategory = "All";
 let cars = [];
+let currentFilteredCars = []; // ✅ Track the filtered list for modal
 
-// ✅ Correct fetch from backend API
+// ✅ Fetch cars from backend API
 fetch('https://top-gear-autos.onrender.com/api/cars')
   .then(res => res.json())
   .then(data => {
     cars = data;
-    renderCars(); // Render only after successful fetch
+    renderCars();
   })
   .catch(err => {
     carList.innerHTML = "<p>❌ Failed to load cars from server.</p>";
@@ -25,7 +26,7 @@ function renderCars() {
   let filtered = [...cars];
 
   // ✅ Category filter
-  if (activeCategory && activeCategory !== "All") {
+  if (activeCategory !== "All") {
     filtered = filtered.filter(car =>
       car.category?.toLowerCase() === activeCategory.toLowerCase()
     );
@@ -52,13 +53,15 @@ function renderCars() {
     );
   }
 
-  // ✅ Fallback if nothing matches
+  // ✅ Save filtered cars globally
+  currentFilteredCars = filtered;
+
   if (filtered.length === 0) {
     carList.innerHTML = "<p>No cars found matching your filters.</p>";
     return;
   }
 
-  // ✅ Render filtered car cards
+  // ✅ Render cards
   filtered.forEach((car, index) => {
     const card = document.createElement("div");
     card.className = "car-card";
@@ -80,7 +83,7 @@ filterBtn.addEventListener("click", renderCars);
 budgetFilter.addEventListener("change", renderCars);
 typeFilter.addEventListener("change", renderCars);
 
-// ✅ Category button logic
+// ✅ Category tab buttons
 categoryButtons.forEach(button => {
   button.addEventListener("click", () => {
     categoryButtons.forEach(btn => btn.classList.remove("active"));
@@ -90,11 +93,11 @@ categoryButtons.forEach(button => {
   });
 });
 
-// ✅ Modal logic
+// ✅ View Details (modal)
 document.addEventListener("click", function (e) {
   if (e.target.classList.contains("offer-btn")) {
     const index = e.target.dataset.index;
-    const car = cars[index];
+    const car = currentFilteredCars[index]; // ✅ use filtered list!
 
     document.getElementById("modal-name").textContent = car.name || "N/A";
     document.getElementById("modal-price").textContent = car.price || "N/A";
@@ -112,9 +115,7 @@ document.addEventListener("click", function (e) {
   }
 });
 
-
-
-
+// ✅ Admin login logic
 const loginForm = document.getElementById("login-form");
 
 if (loginForm) {
@@ -135,7 +136,7 @@ if (loginForm) {
 
       if (data.success) {
         alert("✅ Login successful");
-        window.location.href = "dashboard.html"; // redirect to admin panel
+        window.location.href = "dashboard.html"; // or admin.html
       } else {
         alert("❌ Invalid credentials");
       }
@@ -145,4 +146,3 @@ if (loginForm) {
     }
   });
 }
-
