@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Top Gear Admin Panel</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      max-width: 600px;
+      margin: auto;
+      background-color: #f8f8f8;
+    }
+    input, button {
+      padding: 10px;
+      margin: 5px 0;
+      width: 100%;
+    }
+    .section {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    button {
+      background-color: #ff5a30;
+      color: #fff;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>🔐 Admin Login</h2>
+  <div class="section">
+    <input type="text" id="username" placeholder="Username" />
+    <input type="password" id="password" placeholder="Password" />
+    <button onclick="login()">Login</button>
+    <p id="login-status"></p>
+  </div>
+
+  <h2>➕ Add Car</h2>
+  <div class="section">
+    <input type="text" id="name" placeholder="Car Name" />
+    <input type="text" id="price" placeholder="Price (₹X Lakh)" />
+    <input type="number" id="year" placeholder="Year" />
+    <input type="text" id="km" placeholder="Kilometers Driven" />
+    <input type="text" id="fuel" placeholder="Fuel Type" />
+    <input type="text" id="transmission" placeholder="Transmission" />
+    <input type="text" id="category" placeholder="Category (SUV, Sedan...)" />
+    <input type="text" id="image" placeholder="Image URL" />
+    <button onclick="addCar()">Add Car</button>
+    <p id="add-status"></p>
+  </div>
+
+  <h2>❌ Delete Car</h2>
+  <div class="section">
+    <input type="text" id="deleteId" placeholder="Car ID to Delete" />
+    <button onclick="deleteCar()">Delete</button>
+    <p id="delete-status"></p>
+  </div>
+
+  <script>
+    let token = '';
+
+    function login() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      fetch('http://localhost:5000/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.token) {
+          token = data.token;
+          document.getElementById('login-status').textContent = '✅ Login successful!';
+        } else {
+          document.getElementById('login-status').textContent = '❌ Login failed!';
+        }
+      });
+    }
+
+    function addCar() {
+      const car = {
+        name: document.getElementById('name').value,
+        price: document.getElementById('price').value,
+        year: Number(document.getElementById('year').value),
+        km: document.getElementById('km').value,
+        fuel: document.getElementById('fuel').value,
+        transmission: document.getElementById('transmission').value,
+        category: document.getElementById('category').value,
+        image: document.getElementById('image').value
+      };
+
+      fetch('http://localhost:5000/api/cars', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify(car)
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          document.getElementById('add-status').textContent = '✅ Car added!';
+        } else {
+          document.getElementById('add-status').textContent = '❌ Failed to add car';
+        }
+      });
+    }
+
+    function deleteCar() {
+      const id = document.getElementById('deleteId').value;
+
+      fetch(`http://localhost:5000/api/cars/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': 'Bearer ' + token
+        }
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          document.getElementById('delete-status').textContent = '✅ Car deleted!';
+        } else {
+          document.getElementById('delete-status').textContent = '❌ Failed to delete';
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>

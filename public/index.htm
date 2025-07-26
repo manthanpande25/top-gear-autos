@@ -1,0 +1,101 @@
+
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Top Gear Autos</title>
+  
+  <!-- ✅ Corrected CSS path -->
+  <link rel="stylesheet" href="css/style.css" />
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Header -->
+  <header class="navbar">
+    <div class="logo">
+      <img src="assets/imberio-removebg-preview.png" alt="Top Gear Autos Logo" class="logo-img" />
+    </div>
+    <nav class="nav-links">
+      <a href="#">Used Cars</a>
+      <a href="#">Offers</a>
+      <a href="/admin.html">Admin Panel</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <img src="assets/hero2.jpg" alt="Hero Car" class="hero-img" />
+    <div class="search-box">
+      <h2>Find your right car</h2>
+      <div class="filters">
+  <label>By Budget</label>
+  <select id="budget-filter">
+    <option value="All">Select Budget</option>
+    <option value="under5">Under ₹5L</option>
+    <option value="5to10">₹5L - ₹10L</option>
+    <option value="10plus">Above ₹10L</option>
+  </select>
+
+  <select id="type-filter">
+    <option value="All">All Vehicle Types</option>
+    <option value="SUV">SUV</option>
+    <option value="Hatchback">Hatchback</option>
+    <option value="Sedan">Sedan</option>
+    <option value="MUV">MUV</option>
+    <option value="Luxury">Luxury</option>
+  </select>
+
+  <button class="search-btn" id="filter-btn">Search</button>
+</div>
+
+      <a href="#" class="advanced-link">Advanced Search →</a>
+    </div>
+  </section>
+
+  <!-- Car Categories -->
+  <section class="car-section">
+    <h2>The most searched cars</h2>
+    <div class="category-tabs">
+      <button class="active" data-category="All">All</button>
+      <button data-category="SUV">SUV</button>
+      <button data-category="Hatchback">Hatchback</button>
+      <button data-category="Sedan">Sedan</button>
+      <button data-category="MUV">MUV</button>
+      <button data-category="Luxury">Luxury</button>
+    </div>
+
+    <div class="car-grid" id="car-list">
+      <!-- Cards will be rendered here from JS -->
+    </div>
+  </section>
+
+
+
+  <div class="modal" id="carModal">
+  <div class="modal-content">
+    <span class="close-btn">&times;</span>
+    <div class="modal-body">
+      <img id="modal-image" src="" alt="Car Image" />
+      <div class="modal-info">
+        <h2 id="modal-name">Car Name</h2>
+        <p><strong>Price:</strong> <span id="modal-price"></span></p>
+        <p><strong>Year:</strong> <span id="modal-year"></span></p>
+        <p><strong>Kilometers:</strong> <span id="modal-km"></span></p>
+        <p><strong>Fuel Type:</strong> <span id="modal-fuel"></span></p>
+        <p><strong>Transmission:</strong> <span id="modal-transmission"></span></p>
+        <button class="contact-btn">Contact Us</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <!-- ✅ Corrected JS path -->
+  <script src="js/script.js"></script>
+</body>
+</html>
