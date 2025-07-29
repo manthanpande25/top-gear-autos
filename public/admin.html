@@ -233,34 +233,51 @@
       window.location.href = "index.html"; // Change if different home
     }
 
-    function addCar() {
-      const car = {
-        name: document.getElementById('name').value,
-        price: document.getElementById('price').value,
-        year: +document.getElementById('year').value,
-        km: document.getElementById('km').value,
-        fuel: document.getElementById('fuel').value,
-        transmission: document.getElementById('transmission').value,
-        category: document.getElementById('category').value,
-        image: document.getElementById('image').value
-      };
+ function addCar() {
+  const car = {
+    name: document.getElementById('name').value.trim(),
+    price: document.getElementById('price').value.trim(),
+    year: +document.getElementById('year').value,
+    km: document.getElementById('km').value.trim(),
+    fuel: document.getElementById('fuel').value.trim(),
+    transmission: document.getElementById('transmission').value.trim(),
+    category: document.getElementById('category').value.trim(),
+    image: document.getElementById('image').value.trim()
+  };
 
-      fetch(`${BASE_URL}/api/cars`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + token
-        },
-        body: JSON.stringify(car)
-      })
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById('add-status').textContent = data.success ? '✅ Car added!' : '❌ Failed to add car';
-      })
-      .catch(err => {
-        document.getElementById('add-status').textContent = '❌ Error: ' + err.message;
-      });
-    }
+  console.log("🚗 Submitting car:", car); // ✅ Log full data
+
+  // Basic validation
+  if (!car.name || !car.image || !car.price || !car.year) {
+    document.getElementById('add-status').textContent = '❌ All fields are required!';
+    return;
+  }
+
+  fetch(`${BASE_URL}/api/cars`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
+    },
+    body: JSON.stringify(car)
+  })
+    .then(async res => {
+      const text = await res.text();
+      try {
+        const json = JSON.parse(text);
+        console.log("✅ Server response:", json);
+        document.getElementById('add-status').textContent = json.success ? '✅ Car added!' : '❌ Failed to add car';
+      } catch (err) {
+        console.error("❌ Invalid JSON from server:", text);
+        document.getElementById('add-status').textContent = '❌ Invalid server response';
+      }
+    })
+    .catch(err => {
+      console.error("❌ Network or fetch error:", err);
+      document.getElementById('add-status').textContent = '❌ Error: ' + err.message;
+    });
+}
+
 
 function deleteCarByName() {
     const name = document.getElementById('deleteName').value;
