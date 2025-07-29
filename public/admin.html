@@ -130,10 +130,11 @@
     </div>
 
     <!-- ✅ Logout & Back -->
-    <div id="logout-section" class="section" style="display: none;">
-      <button class="home-btn" onclick="goHome()">🏠 Back to Home</button>
-      <button class="logout-btn" onclick="logout()">🚪 Logout</button>
-    </div>
+  <div id="logout-section" class="section" style="display: none;">
+  <button class="home-btn" onclick="goHome()">🏠 Back to Home</button>
+  <button class="logout-btn" onclick="logout()">🚪 Logout</button>
+</div>
+
 
     <!-- ✅ Add Car -->
     <h2>➕ Add Car</h2>
@@ -150,11 +151,10 @@
       <p id="add-status"></p>
     </div>
 
-    <!-- ✅ Delete Car -->
-<h2>❌ Delete Car by Name</h2>
+<h2>❌ Delete Car</h2>
 <div class="section">
-  <input type="text" id="deleteName" placeholder="Car Name to Delete" />
-  <button onclick="deleteCarByName()">Delete by Name</button>
+  <input type="text" id="deleteName" placeholder="Enter Car Name to Delete" />
+  <button onclick="deleteCarByName()">Delete</button>
   <p id="delete-status"></p>
 </div>
 
@@ -262,38 +262,33 @@
       });
     }
 
-function deleteCar() {
-  const idOrName = document.getElementById('deleteId').value;
+function deleteCarByName() {
+    const name = document.getElementById('deleteName').value;
 
-  let url = '';
-  if (isNaN(idOrName)) {
-    // Assume it's a name
-    url = `${BASE_URL}/api/cars/delete-by-name/${encodeURIComponent(idOrName)}`;
-  } else {
-    // Assume it's an ID
-    url = `${BASE_URL}/api/cars/${idOrName}`;
-  }
-
-  fetch(url, {
-    method: 'DELETE',
-    headers: {
-      'Authorization': 'Bearer ' + token
-    }
-  })
-    .then(async res => {
-      const text = await res.text();
-      try {
-        const json = JSON.parse(text);
-        document.getElementById('delete-status').textContent = json.message || 'Done';
-      } catch (err) {
-        console.error("❌ Invalid JSON:", text);
-        document.getElementById('delete-status').textContent = '❌ Server error.';
+    fetch(`${BASE_URL}/api/cars/delete-by-name/${encodeURIComponent(name)}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        document.getElementById('delete-status').textContent = `✅ ${data.message}`;
+      } else {
+        document.getElementById('delete-status').textContent = `❌ ${data.message}`;
       }
     })
     .catch(err => {
-      document.getElementById('delete-status').textContent = '❌ Delete failed: ' + err.message;
-      console.error("Delete car error:", err);
+      document.getElementById('delete-status').textContent = `❌ Error: ${err.message}`;
     });
+  }
+
+
+
+
+  function goHome() {
+  window.location.href = "index.htm"; // adjust path if needed
 }
 
 
