@@ -1,4 +1,4 @@
-/* public/css/styles.css */
+/* Base Styles */
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
@@ -11,6 +11,7 @@ a {
   color: inherit;
 }
 
+/* Navbar */
 .navbar {
   background-color: #fff;
   padding: 15px 30px;
@@ -18,35 +19,36 @@ a {
   justify-content: space-between;
   align-items: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  flex-wrap: wrap;
 }
-
-
 
 .logo img {
   height: 50px;
   width: auto;
-  display: block;
 }
 
-.navbar .logo {
+.nav-links {
   display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
   align-items: center;
 }
 
-
 .nav-links a {
-  margin-left: 20px;
   font-weight: 500;
+  transition: color 0.2s ease;
 }
 
-.nav-links a:hover{
-    color: #ff5a30;
+.nav-links a:hover {
+  color: #ff5a30;
 }
 
+/* Hero Section */
 .hero {
   position: relative;
   width: 100%;
-  height: 60vh; /* Responsive height */
+  height: 60vh;
   overflow: hidden;
 }
 
@@ -54,10 +56,7 @@ a {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
-  display: block;
 }
-
 
 .search-box {
   position: absolute;
@@ -68,30 +67,11 @@ a {
   padding: 20px;
   width: 300px;
   border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 
 .search-box h2 {
   margin-bottom: 15px;
-}
-
-.tabs {
-  display: flex;
-  margin-bottom: 10px;
-}
-
-.tabs button {
-  flex: 1;
-  padding: 8px 0;
-  border: none;
-  background-color: #eee;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.tabs .active {
-  background-color: #000;
-  color: #fff;
 }
 
 .filters label {
@@ -128,6 +108,7 @@ a {
   color: #444;
 }
 
+/* Car Section */
 .car-section {
   padding: 30px;
   background-color: #fff;
@@ -156,7 +137,7 @@ a {
   color: #fff;
 }
 
-/* ✅ FIXED GRID */
+/* Car Grid */
 .car-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -165,17 +146,16 @@ a {
   justify-items: center;
 }
 
-/* ✅ FIXED CARD */
 .car-card {
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
   transition: transform 0.2s ease;
   width: 100%;
   max-width: 300px;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .car-card:hover {
@@ -216,51 +196,16 @@ a {
   cursor: pointer;
 }
 
-
-.car-card:hover {
-  transform: translateY(-5px);
-}
-
-.car-card img {
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
-}
-
-.car-card .info {
-  padding: 15px;
-}
-
-.car-card h4 {
-  margin: 0 0 8px;
-  font-size: 1rem;
-}
-
-.car-card p {
-  margin: 0;
-  font-size: 0.9rem;
-  color: #555;
-}
-
-.car-card .offer-btn {
-  margin-top: 10px;
-  display: inline-block;
-  border: 1px solid #ff5a30;
-  padding: 6px 12px;
-  color: #ff5a30;
-  border-radius: 4px;
-  font-weight: 500;
-  font-size: 0.85rem;
-}
-
-
+/* Modal */
 .modal {
   display: none;
   position: fixed;
   z-index: 999;
-  left: 0; top: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.6);
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
   justify-content: center;
   align-items: center;
 }
@@ -291,7 +236,8 @@ a {
 
 .close-btn {
   position: absolute;
-  top: 10px; right: 20px;
+  top: 10px;
+  right: 20px;
   font-size: 24px;
   cursor: pointer;
   font-weight: bold;
@@ -306,4 +252,294 @@ a {
   font-weight: bold;
   border-radius: 6px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
+
+.contact-btn:hover {
+  background-color: #e94a1a;
+}
+
+/* Footer */
+footer.main-footer {
+  background-color: #2c2c2c;
+  color: #f1f1f1;
+  padding: 50px 20px;
+  font-family: 'Inter', sans-serif;
+  border-top: 4px solid #ff5a30;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 40px;
+  text-align: left;
+}
+
+.footer-logo-section {
+  flex: 1;
+}
+
+.footer-logo-section h2 {
+  color: #ff5a30;
+  margin-bottom: 10px;
+  font-size: 24px;
+}
+
+.footer-logo-section p {
+  font-size: 14px;
+  color: #ccc;
+}
+
+.footer-contact,
+.footer-developer {
+  flex: 1;
+}
+
+.footer-contact h3,
+.footer-developer h3 {
+  color: #ffffff;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.footer-contact a,
+.footer-developer p {
+  font-size: 14px;
+  color: #ccc;
+  text-decoration: none;
+  display: block;
+  margin-bottom: 6px;
+  transition: 0.2s;
+}
+
+.footer-contact a:hover {
+  color: #ff5a30;
+  text-decoration: underline;
+}
+
+.footer-developer strong {
+  color: #ff5a30;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1024px) {
+  .search-box {
+    width: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .modal-body {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .modal-body img {
+    width: 100%;
+    max-width: 90%;
+    height: auto;
+  }
+
+  .modal-info {
+    width: 100%;
+    padding-top: 10px;
+    text-align: center;
+  }
+
+  .modal-content {
+    padding: 20px;
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .search-box {
+    width: 90%;
+    padding: 16px;
+  }
+
+  .hero {
+    height: auto;
+    min-height: 60vh;
+  }
+
+  .category-tabs {
+    justify-content: center;
+  }
+
+  .car-card {
+    max-width: 100%;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 30px;
+  }
+
+  .footer-logo-section,
+  .footer-contact,
+  .footer-developer {
+    width: 100%;
+  }
+
+  .contact-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-box {
+    width: 95%;
+    padding: 14px;
+  }
+
+  .search-btn,
+  .filters select {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .hero-img {
+    height: auto;
+    max-height: 300px;
+  }
+
+  .car-card img {
+    height: 140px;
+  }
+
+  .car-section {
+    padding: 20px;
+  }
+
+  .modal-content {
+    padding: 16px;
+  }
+
+  .footer-logo-section h2 {
+    font-size: 18px;
+  }
+
+  .footer-contact h3,
+  .footer-developer h3 {
+    font-size: 15px;
+  }
+
+  .footer-contact a,
+  .footer-developer p {
+    font-size: 13px;
+  }
+}
+
+.navbar {
+  background-color: #fff;
+  padding: 15px 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Logo */
+.logo {
+  flex: 1;
+}
+
+.logo img {
+  height: 50px;
+}
+
+/* Nav Links */
+.nav-links {
+  display: flex;
+  gap: 25px;
+
+  align-items: center;
+  flex: 1;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #222;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.nav-links a:hover {
+  color: #ff5a30;
+}
+
+/* Toggle button - hidden on desktop */
+.menu-toggle {
+  display: none;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .navbar-container {
+    justify-content: space-between;
+  }
+
+  .menu-toggle {
+    display: block;
+    z-index: 1001;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 0;
+    left: -100%; /* Ensures completely hidden */
+    width: 250px;
+    height: 100vh;
+    flex-direction: column;
+    background: white;
+    padding: 80px 20px;
+    transition: left 0.3s ease;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    overflow-y: auto; /* Fix for cut-off links */
+    box-sizing: border-box;
+  }
+
+  .nav-links.show {
+    left: 0;
+  }
+
+  .nav-links a {
+    font-size: 18px;
+    padding: 12px 0;
+  }
+
+    .nav-links a :hover {
+    font-size: 18px;
+    padding: 12px 0;
+  }
+}
+
+
+
+

@@ -1,193 +1,303 @@
-<!-- All changes are marked with ✅ comments -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Top Gear Admin Panel</title>
+  <meta charset="UTF-8">
+  <title>Admin Panel - Top Gear Autos</title>
+  <link rel="stylesheet" href="css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
+      margin: 0;
       font-family: Arial, sans-serif;
-      padding: 30px;
+      background-color: #f8f8f8;
+      padding: 20px;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    .container {
       max-width: 600px;
       margin: auto;
-      background-color: #f8f8f8;
     }
-    input, button {
-      padding: 10px;
-      margin: 5px 0;
-      width: 100%;
+
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
     }
+
+    .logo img {
+      height: 60px;
+    }
+
+    h2 {
+      margin-top: 40px;
+    }
+
     .section {
       background: #fff;
       padding: 20px;
-      margin-bottom: 20px;
       border-radius: 8px;
+      margin-bottom: 30px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      font-size: 16px;
+    }
+
     button {
       background-color: #ff5a30;
-      color: #fff;
       border: none;
+      color: #fff;
       font-weight: bold;
       cursor: pointer;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background-color: #e64a23;
+    }
+
+    #logout-section {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .logout-btn {
+      background-color: #333;
+    }
+
+    .logout-btn:hover {
+      background-color: #222;
+    }
+
+    .home-btn {
+      background-color: #0099cc;
+    }
+
+    .home-btn:hover {
+      background-color: #007aad;
+    }
+
+
+    /* Mobile Responsive */
+    @media (max-width: 480px) {
+      .container {
+        padding: 10px;
+      }
+
+      .section {
+        padding: 15px;
+      }
+
+      input, button {
+        font-size: 14px;
+        padding: 10px;
+      }
+
+
+      #logout-section {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
 <body>
 
-  <h2>🔐 Admin Login</h2>
-<div class="section section-login">
-  <input id="username" ... />
-  <input id="password" ... />
-  <button onclick="login()">Login</button>
-  <p id="login-status"></p>
+  <div class="container">
+
+    <!-- ✅ Logo -->
+    <div class="logo">
+      <img src="assets/imberio-removebg-preview.png" alt="Top Gear Logo" />
+    </div>
+
+    <!-- ✅ Login Section -->
+    <h2>🔐 Admin Login</h2>
+    <div class="section section-login">
+      <input id="username" placeholder="Username" />
+      <input id="password" type="password" placeholder="Password" />
+      <button onclick="login()">Login</button>
+      <p id="login-status"></p>
+    </div>
+
+    <!-- ✅ Logout & Back -->
+    <div id="logout-section" class="section" style="display: none;">
+      <button class="home-btn" onclick="goHome()">🏠 Back to Home</button>
+      <button class="logout-btn" onclick="logout()">🚪 Logout</button>
+    </div>
+
+    <!-- ✅ Add Car -->
+    <h2>➕ Add Car</h2>
+    <div class="section">
+      <input type="text" id="name" placeholder="Car Name" />
+      <input type="text" id="price" placeholder="Price (₹X Lakh)" />
+      <input type="number" id="year" placeholder="Year" />
+      <input type="text" id="km" placeholder="Kilometers Driven" />
+      <input type="text" id="fuel" placeholder="Fuel Type" />
+      <input type="text" id="transmission" placeholder="Transmission" />
+      <input type="text" id="category" placeholder="Category (SUV, Sedan...)" />
+      <input type="text" id="image" placeholder="Image URL" />
+      <button onclick="addCar()">Add Car</button>
+      <p id="add-status"></p>
+    </div>
+
+    <!-- ✅ Delete Car -->
+<h2>❌ Delete Car by Name</h2>
+<div class="section">
+  <input type="text" id="deleteName" placeholder="Car Name to Delete" />
+  <button onclick="deleteCarByName()">Delete by Name</button>
+  <p id="delete-status"></p>
 </div>
-<button onclick="logout()">Logout</button>
 
 
-  <h2>➕ Add Car</h2>
-  <div class="section">
-    <input type="text" id="name" placeholder="Car Name" />
-    <input type="text" id="price" placeholder="Price (₹X Lakh)" />
-    <input type="number" id="year" placeholder="Year" />
-    <input type="text" id="km" placeholder="Kilometers Driven" />
-    <input type="text" id="fuel" placeholder="Fuel Type" />
-    <input type="text" id="transmission" placeholder="Transmission" />
-    <input type="text" id="category" placeholder="Category (SUV, Sedan...)" />
-    <input type="text" id="image" placeholder="Image URL" />
-    <button onclick="addCar()">Add Car</button>
-    <p id="add-status"></p>
-  </div>
+  <footer class="main-footer" id="footer">
+    <div class="footer-content">
+      <div class="footer-logo-section">
+        <h2>Top Gear Autos</h2>
+        <p>Drive smarter. Drive with confidence.</p>
+      </div>
 
-  <h2>❌ Delete Car</h2>
-  <div class="section">
-    <input type="text" id="deleteId" placeholder="Car ID to Delete" />
-    <button onclick="deleteCar()">Delete</button>
-    <p id="delete-status"></p>
-  </div>
+      <div class="footer-contact">
+        <h3>Contact Us</h3>
+        <p><a href="https://maps.app.goo.gl/Wh19gNiJSEE3q7rf7" target="_blank">📍Top Gear Autos (CarWale Absure)</a></p>
+        <p><a href="tel:+919876543210">📞 +91 98765 43210</a></p>
+        <p><a href="mailto:support@topgearautos.com">📧 support@topgearautos.com</a></p>
+      </div>
 
+      <div class="footer-developer">
+        <h3>Made with ❤️</h3>
+        <p>Designed & Developed by <strong>Manthan Pande</strong></p>
+        <p>&copy; <span id="year"></span> Top Gear Autos</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JS -->
   <script>
- const BASE_URL = 'https://top-gear-autos.onrender.com';
-let token = localStorage.getItem("adminToken") || "";
-let loggedInUser = localStorage.getItem("adminUser") || "";
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+  <!-- ✅ Script -->
+  <script>
+    const BASE_URL = 'https://top-gear-autos.onrender.com';
+    let token = localStorage.getItem("adminToken") || "";
+    let loggedInUser = localStorage.getItem("adminUser") || "";
 
-if (token) {
-  // ✅ Already logged in – show admin panel
-  document.getElementById('login-status').textContent = `👋 Welcome back, ${loggedInUser}`;
-  // Optionally: hide login section, show only admin tools
-  document.querySelector('.section-login').style.display = 'none';
-}
+    // Show/hide login or logout
+    if (token) {
+      document.querySelector('.section-login').style.display = 'none';
+      document.getElementById('logout-section').style.display = 'flex';
+      document.getElementById('login-status').textContent = `👋 Welcome back, ${loggedInUser}`;
+    }
 
+    function login() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
 
-  // 🔐 Login Function
-  function login() {
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-
-    fetch(`${BASE_URL}/api/admin/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password })
-    })
+      fetch(`${BASE_URL}/api/admin/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      })
       .then(res => res.json())
       .then(data => {
-        console.log("🔐 Login response:", data);
-
-        if (data.success){
+        if (data.success) {
           token = data.token;
-          localStorage.setItem("adminToken", token); // ✅ Save token
-          document.getElementById('login-status').textContent = '✅ Login successful!';
+          localStorage.setItem("adminToken", token);
+          localStorage.setItem("adminUser", username);
+          location.reload();
         } else {
-          document.getElementById('login-status').textContent = '❌ Invalid username or password';
+          document.getElementById('login-status').textContent = '❌ Invalid credentials';
         }
       })
-      .catch(err => {
-        document.getElementById('login-status').textContent = '❌ Login failed. Server error.';
-        console.error("Login error:", err);
+      .catch(() => {
+        document.getElementById('login-status').textContent = '❌ Login failed';
       });
-
-    console.log("📤 Sending login:", username, password);
-  }
-
-  // ➕ Add Car Function
-  function addCar() {
-    const car = {
-      name: document.getElementById('name').value,
-      price: document.getElementById('price').value,
-      year: Number(document.getElementById('year').value),
-      km: document.getElementById('km').value,
-      fuel: document.getElementById('fuel').value,
-      transmission: document.getElementById('transmission').value,
-      category: document.getElementById('category').value,
-      image: document.getElementById('image').value
-    };
-
-    fetch(`${BASE_URL}/api/cars`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-      },
-      body: JSON.stringify(car)
-    })
-      .then(async res => {
-        const text = await res.text();
-        try {
-          const json = JSON.parse(text);
-          if (json.success) {
-            document.getElementById('add-status').textContent = '✅ Car added!';
-          } else {
-            document.getElementById('add-status').textContent = '❌ Failed to add car';
-          }
-        } catch (err) {
-          console.error("❌ Invalid JSON:", text);
-          document.getElementById('add-status').textContent = '❌ Invalid server response';
-        }
-      })
-      .catch(err => {
-        document.getElementById('add-status').textContent = '❌ Add failed: ' + err.message;
-        console.error("Add car error:", err);
-      });
-  }
-
-  // ❌ Delete Car Function
-  function deleteCar() {
-    const id = document.getElementById('deleteId').value;
-
-    fetch(`${BASE_URL}/api/cars/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': 'Bearer ' + token
-      }
-    })
-      .then(async res => {
-        const text = await res.text();
-        try {
-          const json = JSON.parse(text);
-          if (json.success) {
-            document.getElementById('delete-status').textContent = '✅ Car deleted!';
-          } else {
-            document.getElementById('delete-status').textContent = '❌ Failed to delete car';
-          }
-        } catch (err) {
-          console.error("❌ Invalid JSON:", text);
-          document.getElementById('delete-status').textContent = '❌ Invalid server response';
-        }
-      })
-      .catch(err => {
-        document.getElementById('delete-status').textContent = '❌ Delete failed: ' + err.message;
-        console.error("Delete car error:", err);
-      });
-  }
+    }
 
     function logout() {
-  localStorage.removeItem("adminToken");
-  localStorage.removeItem("adminUser");
-  location.reload(); // reload page to reset state
+      localStorage.removeItem("adminToken");
+      localStorage.removeItem("adminUser");
+      location.reload();
+    }
+
+    function goHome() {
+      window.location.href = "index.html"; // Change if different home
+    }
+
+    function addCar() {
+      const car = {
+        name: document.getElementById('name').value,
+        price: document.getElementById('price').value,
+        year: +document.getElementById('year').value,
+        km: document.getElementById('km').value,
+        fuel: document.getElementById('fuel').value,
+        transmission: document.getElementById('transmission').value,
+        category: document.getElementById('category').value,
+        image: document.getElementById('image').value
+      };
+
+      fetch(`${BASE_URL}/api/cars`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify(car)
+      })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('add-status').textContent = data.success ? '✅ Car added!' : '❌ Failed to add car';
+      })
+      .catch(err => {
+        document.getElementById('add-status').textContent = '❌ Error: ' + err.message;
+      });
+    }
+
+function deleteCar() {
+  const idOrName = document.getElementById('deleteId').value;
+
+  let url = '';
+  if (isNaN(idOrName)) {
+    // Assume it's a name
+    url = `${BASE_URL}/api/cars/delete-by-name/${encodeURIComponent(idOrName)}`;
+  } else {
+    // Assume it's an ID
+    url = `${BASE_URL}/api/cars/${idOrName}`;
+  }
+
+  fetch(url, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
+  })
+    .then(async res => {
+      const text = await res.text();
+      try {
+        const json = JSON.parse(text);
+        document.getElementById('delete-status').textContent = json.message || 'Done';
+      } catch (err) {
+        console.error("❌ Invalid JSON:", text);
+        document.getElementById('delete-status').textContent = '❌ Server error.';
+      }
+    })
+    .catch(err => {
+      document.getElementById('delete-status').textContent = '❌ Delete failed: ' + err.message;
+      console.error("Delete car error:", err);
+    });
 }
 
 
+    document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 
 </body>

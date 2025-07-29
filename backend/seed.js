@@ -3,7 +3,7 @@ const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, './.env') });
 
 
-const Car = require('./models/car');
+const Car = require('../models/car');
 
 // Sample cars (add more from your original list)
 const cars = [
